@@ -19,6 +19,13 @@ Route::resource('/', 'IndexController', [
     'only' => ['index'],
     'names' => ['index' => 'home']
 ]);
+
+Route::get('/articles/cat/{alias}', 'ArticleController@articlesCat')->name('articlesCat');
+//Route::resource('/categories', 'CategoryController', [
+//    'parameters' => [
+//        'categories' => 'alias'
+//
+//    ]]);
 Route::resource('/articles', 'ArticleController', [
     'parameters' => [
         'articles' => 'alias'

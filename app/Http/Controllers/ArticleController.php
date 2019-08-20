@@ -35,10 +35,11 @@ class ArticleController extends SiteController
 //        $portfolios = $this->getPortfolio();
 //
 //        $content = view(env('THEME').'.articles_content')->with(compact('portfolios'))->render();
-        $content = view(env('THEME').'.articles_content')->render();
+        $articles = $this->getArticles();
+
+        $content = view(env('THEME').'.articles_content')->with('articles', $articles)->render();
         $this->vars = Arr::add($this->vars, 'content', $content);
 
-        $articles = $this->getArticles();
         $this->contentRightBar = view(env('THEME').'.indexBar')->with(compact('articles'))->render();
 
         return $this->renderOutput();
@@ -109,6 +110,11 @@ class ArticleController extends SiteController
     public function destroy(Article $article)
     {
         //
+    }
+
+    public function articlesCat($id)
+    {
+
     }
 
 
