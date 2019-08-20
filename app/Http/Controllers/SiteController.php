@@ -99,14 +99,15 @@ class SiteController extends Controller
         $menu = $this->m_rep->get();
 
         $mBuilder = new Menu();
+        //TODO: parent переименовать в parent_id или нет
         $mBuilder->make('MyMenu', function ($m) use ($menu) {
 //        $mBuilder = Menu::make('MyMenu', function ($m) use ($menu) {
             foreach ($menu as $item) {
-                if ($item->parent_id == 0){
+                if ($item->parent == 0){
                     $m->add($item->title, $item->path)->id($item->id);
                 } else {
-                    if ($m->find($item->parent_id)){
-                        $m->find($item->parent_id)->add($item->title, $item->path)->id($item->id);
+                    if ($m->find($item->parent)){
+                        $m->find($item->parent)->add($item->title, $item->path)->id($item->id);
                     }
                 }
 
