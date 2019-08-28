@@ -4,25 +4,31 @@
 namespace App\Repositories;
 
 
+use App\Article;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class Repository
 {
     /**
-     * @var Model
+     * @var Model|Article
+     * @mixin \Eloquent
      */
     protected $model = false;
 
     /**
      * @return Collection
      */
-    public function get($select = '*', $take = false, $pagination = false)
+    public function get($select = '*', $take = false, $pagination = false, $order = false)
     {
         $builder = $this->model->select($select);
 
         if($take){
             $builder->take($take);
+        }
+
+        if($order == 'desc'){
+            $builder->orderByDesc('created_at');
         }
 
         if($pagination){
