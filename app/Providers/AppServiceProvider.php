@@ -30,5 +30,9 @@ class AppServiceProvider extends ServiceProvider
             return "<?php $name = $value  ?>";
 
         });
+
+//        \DB::listen(function($query){
+//            echo '<h1>'.$query->sql.'</h1>';
+//        });
     }
 }

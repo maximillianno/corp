@@ -48,6 +48,8 @@ class ArticleController extends SiteController
         $this->vars = Arr::add($this->vars, 'content', $content);
         $comments = $this->getComments(\Config::get('settings.recent_comments'));
 
+//        $hash = md5();
+
         $this->contentRightBar = view(env('THEME').'.articlesBar')->with(compact('articles', 'comments', 'portfolios'))->render();
 
         return $this->renderOutput();
@@ -129,6 +131,10 @@ class ArticleController extends SiteController
     private function getArticles($alias = false)
     {
         $articles = $this->a_rep->get('*', false, true);
+
+//        if($articles){
+//            $articles->load('comments', 'user');
+//        }
 
         return $articles;
 
