@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Category;
 use App\Comment;
 use App\Menu;
 use App\Repositories\ArticlesRepository;
@@ -36,19 +37,17 @@ class ArticleController extends SiteController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($cat_alias = false)
     {
         //
         $portfolios = $this->getPortfolios(\Config::get('settings.recent_portfolios'));
-//
-//        $content = view(env('THEME').'.articles_content')->with(compact('portfolios'))->render();
-        $articles = $this->getArticles();
+
+        $articles = $this->getArticles($cat_alias);
 
         $content = view(env('THEME').'.articles_content')->with('articles', $articles)->render();
         $this->vars = Arr::add($this->vars, 'content', $content);
         $comments = $this->getComments(\Config::get('settings.recent_comments'));
 
-//        $hash = md5();
 
         $this->contentRightBar = view(env('THEME').'.articlesBar')->with(compact('articles', 'comments', 'portfolios'))->render();
 
@@ -124,13 +123,35 @@ class ArticleController extends SiteController
 
     public function articlesCat($id)
     {
-
+//        //For sidebar
+//        $portfolios = $this->getPortfolios(\Config::get('settings.recent_portfolios'));
+//        $comments = $this->getComments(\Config::get('settings.recent_comments'));
+////
+////        $content = view(env('THEME').'.articles_content')->with(compact('portfolios'))->render();
+//        $articles = $this->getArticles($id);
+//
+//        $content = view(env('THEME').'.articles_content')->with('articles', $articles)->render();
+//        $this->vars = Arr::add($this->vars, 'content', $content);
+//
+////        $hash = md5();
+//
+//        $this->contentRightBar = view(env('THEME').'.articlesBar')->with(compact('articles', 'comments', 'portfolios'))->render();
+//
+//        return $this->renderOutput();
     }
 
 
     private function getArticles($alias = false)
     {
-        $articles = $this->a_rep->get('*', false, true);
+        $category_id = false;
+        if($alias){
+
+            $category_id = Category::where('alias', $alias)->first()->id;
+//            $articles = $this->a_rep->get('*', false, true,false, $category_id);
+//            return $articles;
+        }
+//        dd($alias, $category);
+        $articles = $this->a_rep->get('*', false, true,false, $category_id);
 
 //        if($articles){
 //            $articles->load('comments', 'user');

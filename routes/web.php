@@ -20,7 +20,8 @@ Route::resource('/', 'IndexController', [
     'names' => ['index' => 'home']
 ]);
 
-Route::get('/articles/cat/{alias}', 'ArticleController@articlesCat')->name('articlesCat');
+//Route::get('/articles/cat/{alias}', 'ArticleController@articlesCat')->name('articlesCat');
+Route::get('/articles/cat/{alias}', 'ArticleController@index')->name('articlesCat');
 //Route::resource('/categories', 'CategoryController', [
 //    'parameters' => [
 //        'categories' => 'alias'

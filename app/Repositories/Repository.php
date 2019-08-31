@@ -19,7 +19,7 @@ abstract class Repository
     /**
      * @return Collection
      */
-    public function get($select = '*', $take = false, $pagination = false, $order = false)
+    public function get($select = '*', $take = false, $pagination = false, $order = false, $category_id = false)
     {
         $builder = $this->model->select($select);
 
@@ -29,6 +29,11 @@ abstract class Repository
 
         if($order == 'desc'){
             $builder->orderByDesc('created_at');
+        }
+
+//      TODO: переделать на ->where($where[0],$where[1]
+        if ($category_id){
+            $builder->where('category_id', $category_id);
         }
 
         if($pagination){
