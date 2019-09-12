@@ -47,7 +47,7 @@ abstract class Repository
      * @param $get Collection
      * @return Collection
      */
-    private function check($get)
+    protected function check($get)
     {
 //        if ($get->isEmpty()){
 //            //TODO: хз что тут вернуть
@@ -61,6 +61,13 @@ abstract class Repository
         });
 //        dd($get);
         return $get;
+    }
+
+    public function one($alias, $attr = [])
+    {
+        $result = $this->model->where('alias',$alias)->first();
+        return $result;
+
     }
 
 

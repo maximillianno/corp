@@ -12,7 +12,17 @@ class ArticlesRepository extends Repository{
 
     }
 
+    public function one($alias, $attr = [])
+    {
+        $article = parent::one($alias, $attr);
+        if ($article && !empty($attr)){
+            $article->load('comments');
+            $article->comments->load('user');
 
+        }
+        $article->img = json_decode($article->img);
+        return $article;
+    }
 
 
 }

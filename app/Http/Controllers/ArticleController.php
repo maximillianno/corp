@@ -82,9 +82,18 @@ class ArticleController extends SiteController
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show($alias = false)
     {
         //
+        $portfolios = $this->getPortfolios(\Config::get('settings.recent_portfolios'));
+        $comments = $this->getComments(\Config::get('settings.recent_comments'));
+        $article = $this->a_rep->one($alias, ['comments' => true]);
+//        dd($article->comments->groupBy('parent_id'));
+        $this->contentRightBar = view(env('THEME').'.articlesBar')->with(compact( 'comments', 'portfolios', 'articles'))->render();
+        $content = view(env('THEME').'.article_content')->with('article', $article)->render();
+        $this->vars = \Illuminate\Support\Arr::add($this->vars, 'content', $content);
+
+        return $this->renderOutput();
     }
 
     /**
@@ -133,8 +142,8 @@ class ArticleController extends SiteController
 //        $content = view(env('THEME').'.articles_content')->with('articles', $articles)->render();
 //        $this->vars = Arr::add($this->vars, 'content', $content);
 //
-////        $hash = md5();
-//
+        $hash = md5();
+
 //        $this->contentRightBar = view(env('THEME').'.articlesBar')->with(compact('articles', 'comments', 'portfolios'))->render();
 //
 //        return $this->renderOutput();
