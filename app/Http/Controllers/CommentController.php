@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class CommentController extends SiteController
 {
     /**
      * Display a listing of the resource.
@@ -36,6 +36,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
+        echo json_encode(['hello' => 'world']);
     }
 
     /**

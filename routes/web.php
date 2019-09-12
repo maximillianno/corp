@@ -38,6 +38,8 @@ Route::resource('/portfolios', 'PortfolioController', [
 
 ]]);
 
+Route::resource('/comment', 'CommentController', ['only' => ['store']]);
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
