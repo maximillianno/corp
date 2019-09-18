@@ -21,7 +21,7 @@ jQuery(document).ready(function ($) {
 
                     } else if (html.success) {
                         $('.wrap_result').append('<br><strong>Сохранено</strong>').delay(2000).fadeOut(500, function () {
-                            if (html.parents_id > 0){
+                            if (html.data.parent_id > 0){
                                 comParent.parents('div#respond').prev().after('<ul class="children">' + html.comment + '</ul>');
 
                             } else {

@@ -31,8 +31,9 @@ class CommentController extends SiteController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     * @throws \Throwable
      */
     public function store(Request $request)
     {
@@ -58,6 +59,17 @@ class CommentController extends SiteController
         }
         $post = Article::find($data['article_id']);
         $post->comments()->save($comment);
+
+        $comment->load('user');
+
+        $data['id'] = $comment->id;
+        $data['name'] = (!empty($data['name']))?($data['name']):$comment->user->name;
+        $data['email'] = (!empty($data['email']))?($data['email']):$comment->user->email;
+        $data['hash'] = md5($data['email']);
+
+        $view_comment = view(env('THEME').'.one_comment')->with('data', $data)->render();
+
+        return \Response::json(['success'=>'true', 'comment'=> $view_comment, 'data'=>$data]);
 
     }
 
